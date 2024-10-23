@@ -1,27 +1,28 @@
-import { useDispatch, useSelector } from 'react-redux';
-import Button from '../../ui/Button';
-import { formatCurrency } from '../../utils/helpers';
-import { addItem , getCurrentQuantityById } from '../cart/cartSlice';
-import DeleteItem from '../cart/deleteItem';
-import UpdateItemQuantity from '../cart/UpdataItemQuantity';
+import { useDispatch, useSelector } from 'react-redux'
+import Button from '../../ui/Button'
+import { formatCurrency } from '../../utils/helpers'
+import { addItem, getCurrentQuantityById } from '../cart/cartSlice'
+
+import DeleteItem from '../cart/DeleteItem'
+
+import UpdateItemQuantity from '../cart/UpdataItemQuantity'
 
 function MenuItem({ pizza }) {
-  const dispatch = useDispatch();
-  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch()
+  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza
 
-  const currentQuantity = useSelector(getCurrentQuantityById(id));
-  const isInCart = currentQuantity > 0;
+  const currentQuantity = useSelector(getCurrentQuantityById(id))
+  const isInCart = currentQuantity > 0
 
-
-  function handleAddtoCart(){
-const newItem ={
-            pizzaId: id,
-            name ,
-            quantity: 1,
-            unitPrice,
-            totalPrice: unitPrice *1,
-} ;
-dispatch(addItem(newItem));
+  function handleAddtoCart() {
+    const newItem = {
+      pizzaId: id,
+      name,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
+    }
+    dispatch(addItem(newItem))
   }
 
   return (
@@ -44,21 +45,25 @@ dispatch(addItem(newItem));
               Sold out
             </p>
           )}
-{isInCart &&  <div className='flex items-center gap-3 sm:gap-8'>  
-  <UpdateItemQuantity 
-    pizzaId={id}
-    currentQuantity={currentQuantity}
-    />
+          {isInCart && (
+            <div className="flex items-center gap-3 sm:gap-8">
+              <UpdateItemQuantity
+                pizzaId={id}
+                currentQuantity={currentQuantity}
+              />
 
-   <DeleteItem  pizzaId={id} />
-</div>
-}
-{!soldOut && !isInCart && ( <Button type="small" onClick={handleAddtoCart} >Add to cart</Button>
-         )}
+              <DeleteItem pizzaId={id} />
+            </div>
+          )}
+          {!soldOut && !isInCart && (
+            <Button type="small" onClick={handleAddtoCart}>
+              Add to cart
+            </Button>
+          )}
         </div>
       </div>
     </li>
-  );
-} 
+  )
+}
 
-export default MenuItem;
+export default MenuItem
